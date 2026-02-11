@@ -54,6 +54,10 @@ app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
+app.get("/events", (req, res) => {
+  res.json([]);
+});
+
 // API routes
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
