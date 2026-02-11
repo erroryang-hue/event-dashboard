@@ -49,6 +49,11 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Root route for deployment check
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
+
 // API routes
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
