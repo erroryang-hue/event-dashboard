@@ -1,55 +1,82 @@
+/**
+ * Min Heap Implementation for Priority Queue
+ * Time Complexity:
+ * - Insert: O(log n)
+ * - Extract Min: O(log n)
+ * - Peek: O(1)
+ */
 class MinHeap {
-    constructor() {
-        this.heap = [];
-    }
+  constructor() {
+    this.heap = [];
+  }
 
-    push(val) {
-        this.heap.push(val);
-        this._bubbleUp(this.heap.length - 1);
-    }
+  insert(item) {
+    this.heap.push(item);
+    this.bubbleUp(this.heap.length - 1);
+  }
 
-    pop() {
-        if (this.heap.length === 0) return null;
-        const min = this.heap[0];
-        const last = this.heap.pop();
-        if (this.heap.length > 0) {
-            this.heap[0] = last;
-            this._sinkDown(0);
-        }
-        return min;
+  bubbleUp(index) {
+    while (index > 0) {
+      const parentIndex = Math.floor((index - 1) / 2);
+      if (this.heap[parentIndex].priority <= this.heap[index].priority) break;
+      
+      [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]];
+      index = parentIndex;
     }
+  }
 
-    peek() {
-        return this.heap[0] || null;
+  extractMin() {
+    if (this.heap.length === 0) return null;
+    if (this.heap.length === 1) return this.heap.pop();
+    
+    const min = this.heap[0];
+    this.heap[0] = this.heap.pop();
+    this.bubbleDown(0);
+    return min;
+  }
+
+  bubbleDown(index) {
+    while (true) {
+      let minIndex = index;
+      const leftChild = 2 * index + 1;
+      const rightChild = 2 * index + 2;
+
+      if (leftChild < this.heap.length && 
+          this.heap[leftChild].priority < this.heap[minIndex].priority) {
+        minIndex = leftChild;
+      }
+      
+      if (rightChild < this.heap.length && 
+          this.heap[rightChild].priority < this.heap[minIndex].priority) {
+        minIndex = rightChild;
+      }
+      
+      if (minIndex === index) break;
+
+      [this.heap[index], this.heap[minIndex]] = [this.heap[minIndex], this.heap[index]];
+      index = minIndex;
     }
+  }
 
-    _bubbleUp(index) {
-        while (index > 0) {
-            const parentIdx = Math.floor((index - 1) / 2);
-            if (this.heap[index] >= this.heap[parentIdx]) break;
-            [this.heap[index], this.heap[parentIdx]] = [this.heap[parentIdx], this.heap[index]];
-            index = parentIdx;
-        }
-    }
+  peek() {
+    return this.heap.length > 0 ? this.heap[0] : null;
+  }
 
-    _sinkDown(index) {
-        const length = this.heap.length;
-        while (true) {
-            let leftIdx = 2 * index + 1;
-            let rightIdx = 2 * index + 2;
-            let smallest = index;
+  size() {
+    return this.heap.length;
+  }
 
-            if (leftIdx < length && this.heap[leftIdx] < this.heap[smallest]) {
-                smallest = leftIdx;
-            }
-            if (rightIdx < length && this.heap[rightIdx] < this.heap[smallest]) {
-                smallest = rightIdx;
-            }
-            if (smallest === index) break;
-            [this.heap[index], this.heap[smallest]] = [this.heap[smallest], this.heap[index]];
-            index = smallest;
-        }
-    }
+  isEmpty() {
+    return this.heap.length === 0;
+  }
+
+  getAll() {
+    return [...this.heap].sort((a, b) => a.priority - b.priority);
+  }
+
+  clear() {
+    this.heap = [];
+  }
 }
 
 module.exports = MinHeap;

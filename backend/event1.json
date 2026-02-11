@@ -1,0 +1,9 @@
+{
+    "name": "Test Event 1",
+    "description": "First test event",
+    "start_date": "2026-03-01T10:00:00.000Z",
+    "end_date": "2026-03-01T12:00:00.000Z",
+    "location": "Room A",
+    "capacity": 100,
+    "status": "published"
+}

@@ -1,13 +1,14 @@
+// ============= registrationRoutes.js =============
 const express = require('express');
 const router = express.Router();
 const {
-    getAllRegistrations,
-    searchRegistrations,
-    getRegistrationById,
-    createRegistration,
-    updateRegistration,
-    checkInAttendee,
-    deleteRegistration
+  getAllRegistrations,
+  searchRegistrations,
+  getRegistrationById,
+  createRegistration,
+  updateRegistration,
+  checkInAttendee,
+  deleteRegistration
 } = require('../controllers/registrationController');
 
 router.get('/', getAllRegistrations);

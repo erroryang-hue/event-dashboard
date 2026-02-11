@@ -1,53 +1,105 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     FaStore, FaBullhorn, FaCalendarAlt, FaTicketAlt,
-    FaList, FaGlobe, FaAddressBook, FaChartPie
+    FaList, FaGlobe, FaAddressBook, FaChartPie, FaChartLine, FaAward, FaBuilding, FaUsers
 } from 'react-icons/fa';
+import { analyticsAPI } from '../../services/api';
 
-const QuickActionItem = ({ icon, label, color }) => (
-    <button className={`flex items-center p-3 rounded-lg border border-gray-100 hover:shadow-md transition-shadow bg-blue-50 hover:bg-white text-indigo-600`}>
-        <span className="mr-3 text-lg">{icon}</span>
-        <span className="text-sm font-semibold">{label}</span>
-    </button>
-);
+const iconMap = {
+    'store': FaStore,
+    'building': FaBuilding,
+    'bullhorn': FaBullhorn,
+    'trending-up': FaChartLine,
+    'address-book': FaAddressBook,
+    'list': FaList,
+    'calendar': FaCalendarAlt,
+    'globe': FaGlobe,
+    'ticket': FaTicketAlt,
+    'chart-pie': FaChartPie,
+    'bar-chart': FaChartLine,
+    'award': FaAward,
+    'users': FaUsers,
+    'user-check': FaUsers
+};
 
-const QuickActions = () => {
-    const actions = [
-        { label: 'Exhibitors', icon: <FaStore /> },
-        { label: 'Promote', icon: <FaBullhorn /> },
-        { label: 'Sponsors', icon: <FaAddressBook /> },
-        { label: 'Event Library', icon: <FaList /> },
-        { label: 'Agenda', icon: <FaCalendarAlt /> },
-        { label: 'Custom Domain', icon: <FaGlobe /> },
-        { label: 'Tickets', icon: <FaTicketAlt /> },
-        { label: 'Reports', icon: <FaChartPie /> },
-    ];
+const QuickActionItem = ({ icon, label, urgency }) => {
+    const IconComponent = iconMap[icon] || FaChartLine;
+
+    const urgencyColors = {
+        high: 'bg-red-500/10 hover:bg-red-500/20 text-red-400 border-red-500/20',
+        medium: 'bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border-amber-500/20',
+        low: 'bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 border-indigo-500/20'
+    };
+
+    const colorClass = urgencyColors[urgency] || 'bg-white/5 hover:bg-white/10 text-indigo-400 border-white/10';
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
+        <button className={`flex items-center p-3 rounded-lg border transition-all duration-200 ${colorClass}`}>
+            <IconComponent className="mr-3 text-lg" />
+            <span className="text-sm font-semibold">{label}</span>
+        </button>
+    );
+};
+
+const QuickActions = () => {
+    const [actions, setActions] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchActions = async () => {
+            try {
+                const response = await analyticsAPI.getQuickActions();
+                const body = response.data;
+                const items = Array.isArray(body?.data) ? body.data : (Array.isArray(body) ? body : []);
+                setActions(items);
+            } catch (error) {
+                console.error('Error fetching actions:', error);
+                setActions([
+                    { name: 'View Exhibitors', icon: 'building', urgency: 'medium' },
+                    { name: 'Promote Event', icon: 'bullhorn', urgency: 'high' },
+                    { name: 'Manage Sponsors', icon: 'award', urgency: 'low' },
+                    { name: 'Update Agenda', icon: 'calendar', urgency: 'low' },
+                    { name: 'View Reports', icon: 'chart-pie', urgency: 'low' },
+                    { name: 'Manage Tickets', icon: 'ticket', urgency: 'low' },
+                    { name: 'Event Library', icon: 'list', urgency: 'low' },
+                    { name: 'Custom Domain', icon: 'globe', urgency: 'low' }
+                ]);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchActions();
+    }, []);
+
+    return (
+        <div className="glass-card p-6 h-full">
             <div className="flex items-start mb-6">
-                <div className="bg-indigo-100 p-3 rounded-lg mr-4">
-                    <FaBullhorn className="text-indigo-600 text-xl" />
+                <div className="p-3 rounded-lg mr-4" style={{ background: 'var(--gradient-primary)' }}>
+                    <FaBullhorn className="text-white text-xl" />
                 </div>
                 <div>
-                    <h3 className="text-lg font-bold text-gray-800">Quick Actions</h3>
-                    <p className="text-sm text-gray-500">Streamline your event experience with shortcuts to our features</p>
+                    <h3 className="text-lg font-bold text-slate-100">Quick Actions</h3>
+                    <p className="text-sm text-slate-500">Priority Queue (Min Heap) - O(log n)</p>
                 </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-                {actions.map((action, index) => (
-                    <QuickActionItem key={index} {...action} />
-                ))}
-            </div>
-
-            <div className="flex justify-center mt-4">
-                <div className="flex space-x-1">
-                    <span className="w-6 h-1 bg-indigo-500 rounded-full"></span>
-                    <span className="w-2 h-1 bg-gray-300 rounded-full"></span>
-                    <span className="w-2 h-1 bg-gray-300 rounded-full"></span>
+            {loading ? (
+                <div className="text-center py-8">
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-500 mx-auto"></div>
+                    <p className="text-slate-500 text-sm mt-2">Loading actions...</p>
                 </div>
-            </div>
+            ) : (
+                <div className="grid grid-cols-2 gap-3">
+                    {actions.slice(0, 8).map((action, index) => (
+                        <QuickActionItem
+                            key={index}
+                            label={action.name}
+                            icon={action.icon}
+                            urgency={action.urgency}
+                        />
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

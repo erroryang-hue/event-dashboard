@@ -2,10 +2,10 @@ import React from 'react';
 import { FaPlayCircle, FaMicrophone, FaUsers, FaBriefcase, FaIdBadge, FaIdCard, FaStore } from 'react-icons/fa';
 
 const StatItem = ({ icon, label, value }) => (
-    <div className="flex flex-col items-center p-3 text-center">
-        <span className="text-2xl text-indigo-500 mb-2">{icon}</span>
-        <span className="text-sm text-gray-500 mb-1">{label}</span>
-        <span className="text-xl font-bold text-gray-800">{value}</span>
+    <div className="flex flex-col items-center p-3 text-center group">
+        <span className="text-2xl text-indigo-400 mb-2 group-hover:text-indigo-300 transition-colors">{icon}</span>
+        <span className="text-sm text-slate-500 mb-1">{label}</span>
+        <span className="text-xl font-bold text-slate-100">{value}</span>
     </div>
 );
 
@@ -20,9 +20,9 @@ const EventNumbers = () => {
     ];
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
+        <div className="glass-card p-6 h-full">
             <div className="mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Event numbers</h3>
+                <h3 className="text-lg font-bold text-slate-100">Event numbers</h3>
             </div>
 
             <div className="grid grid-cols-3 gap-4">

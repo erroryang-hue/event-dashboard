@@ -1,34 +1,80 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const dotenv = require('dotenv');
-const { connectDB } = require('./src/config/database');
-const errorHandler = require('./src/middleware/errorHandler');
+const helmet = require('helmet');
+const morgan = require('morgan');
+const rateLimit = require('express-rate-limit');
 
-// Routes
+// Import routes
 const eventRoutes = require('./src/routes/eventRoutes');
 const registrationRoutes = require('./src/routes/registrationRoutes');
 const analyticsRoutes = require('./src/routes/analyticsRoutes');
 
-dotenv.config();
+// Import middleware
+const errorHandler = require('./src/middleware/errorHandler');
+
+// Import EventScheduler initializer
+const { initializeScheduler } = require('./src/controllers/eventController');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors());
+// Security middleware
+app.use(helmet());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true
+}));
+
+// Rate limiting - increased for development
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000 // increased from 100 to 1000 for dev usage
+});
+app.use('/api/', limiter);
+
+// Body parsing middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Database Connection
-connectDB();
+// Logging
+app.use(morgan('dev'));
 
-// API Routes
+// Health check
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
+// API routes
 app.use('/api/events', eventRoutes);
 app.use('/api/registrations', registrationRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// Error Handling
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    error: 'Not Found',
+    message: `Cannot ${req.method} ${req.path}`
+  });
+});
+
+// Error handling middleware
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+// Start server and initialize DSA structures
+app.listen(PORT, async () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔗 API: http://localhost:${PORT}/api`);
+
+  // Initialize EventScheduler with DB data on startup
+  console.log('🧠 Initializing DSA structures...');
+  await initializeScheduler();
+  console.log('✅ DSA structures ready');
 });
+
+module.exports = app;

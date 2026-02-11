@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getEvents } from '../services/api';
+import { eventsAPI } from '../services/api';
 
 const useEventData = () => {
     const [events, setEvents] = useState([]);
@@ -12,8 +12,10 @@ const useEventData = () => {
 
     const fetchEvents = async () => {
         try {
-            const response = await getEvents();
-            setEvents(response.data.data);
+            const response = await eventsAPI.getAll();
+            const body = response.data;
+            const items = Array.isArray(body?.data) ? body.data : (Array.isArray(body) ? body : []);
+            setEvents(items);
             setLoading(false);
         } catch (err) {
             setError(err);

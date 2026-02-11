@@ -1,11 +1,12 @@
+// ============= analyticsRoutes.js =============
 const express = require('express');
 const router = express.Router();
 const {
-    getDashboardAnalytics,
-    getRegistrationTrend,
-    getSalesAnalytics,
-    getQuickActions,
-    getTicketDistribution
+  getDashboardAnalytics,
+  getRegistrationTrend,
+  getSalesAnalytics,
+  getQuickActions,
+  getTicketDistribution
 } = require('../controllers/analyticsController');
 
 router.get('/dashboard', getDashboardAnalytics);

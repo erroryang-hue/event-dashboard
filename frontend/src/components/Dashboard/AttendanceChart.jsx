@@ -1,70 +1,59 @@
 import React from 'react';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const AttendanceChart = () => {
+const AttendanceChart = ({ checkedIn = 0, total = 0 }) => {
+    const yetToCheckIn = Math.max(0, total - checkedIn);
+    const checkedInPercentage = total > 0 ? Math.round((checkedIn / total) * 100) : 0;
+
     const data = {
         labels: ['Checked-in', 'Yet to Check-in'],
-        datasets: [
-            {
-                data: [960, 540],
-                backgroundColor: [
-                    'rgba(16, 185, 129, 1)', // Green 500
-                    'rgba(245, 158, 11, 1)', // Yellow 500
-                ],
-                borderWidth: 0,
-                cutout: '70%',
-            },
-        ],
+        datasets: [{
+            data: [checkedIn, yetToCheckIn],
+            backgroundColor: ['#10B981', '#F59E0B'],
+            borderWidth: 0,
+            hoverOffset: 4
+        }]
     };
 
     const options = {
+        cutout: '75%',
         plugins: {
-            legend: {
-                display: false,
-            }
+            legend: { display: false },
         },
+        maintainAspectRatio: false
     };
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
-            <div className="mb-4">
-                <h3 className="text-lg font-bold text-gray-800">Attendance</h3>
-            </div>
-
-            <div className="flex items-center">
-                <div className="w-1/2 relative">
-                    <Doughnut data={data} options={options} />
-                    <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
-                        <span className="text-xs bg-yellow-500 px-1 rounded absolute top-10 left-4">40%</span>
-                        <span className="text-xs bg-green-500 px-1 rounded absolute bottom-10 right-4">60%</span>
-                    </div>
-                </div>
-
-                <div className="w-1/2 pl-4 space-y-4">
-                    <div>
-                        <div className="flex items-center mb-1">
-                            <span className="w-3 h-3 rounded-full bg-green-500 mr-2"></span>
-                            <span className="text-sm text-gray-500">Checked-in</span>
-                        </div>
-                        <p className="text-lg font-bold">960</p>
-                    </div>
-                    <div>
-                        <div className="flex items-center mb-1">
-                            <span className="w-3 h-3 rounded-full bg-yellow-500 mr-2"></span>
-                            <span className="text-sm text-gray-500">Yet to Check-in</span>
-                        </div>
-                        <p className="text-lg font-bold">540</p>
-                    </div>
+        <div className="glass-card p-6 h-full">
+            <h3 className="text-lg font-bold text-slate-100 mb-6">Attendance</h3>
+            <div className="relative h-48 mb-6">
+                <Doughnut data={data} options={options} />
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                    <span className="text-2xl font-bold text-slate-100">{checkedInPercentage}%</span>
+                    <span className="text-xs text-slate-500 uppercase">Tracked</span>
                 </div>
             </div>
-
-            <div className="mt-6">
-                <button className="w-full bg-indigo-50 text-indigo-700 py-2 rounded-lg font-semibold text-sm hover:bg-indigo-100 transition-colors">
-                    Manage Check-in
-                </button>
+            <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                        <span className="w-3 h-3 rounded-full bg-emerald-500 mr-2"></span>
+                        <span className="text-sm text-slate-400">Checked-in</span>
+                    </div>
+                    <span className="text-sm font-bold text-slate-200">{checkedIn.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                    <div className="flex items-center">
+                        <span className="w-3 h-3 rounded-full bg-amber-500 mr-2"></span>
+                        <span className="text-sm text-slate-400">Yet to Check-in</span>
+                    </div>
+                    <span className="text-sm font-bold text-slate-200">{yetToCheckIn.toLocaleString()}</span>
+                </div>
+            </div>
+            <div className="mt-6 text-center">
+                <button className="text-indigo-400 text-sm font-semibold hover:text-indigo-300 transition-colors">Manage Check-in</button>
             </div>
         </div>
     );

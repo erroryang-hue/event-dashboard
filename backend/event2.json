@@ -1,0 +1,9 @@
+{
+    "name": "Conflicting Event",
+    "description": "Should conflict with Test Event 1",
+    "start_date": "2026-03-01T11:00:00.000Z",
+    "end_date": "2026-03-01T13:00:00.000Z",
+    "location": "Room B",
+    "capacity": 50,
+    "status": "published"
+}

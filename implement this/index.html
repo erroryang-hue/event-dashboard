@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Campus Resource & Task Management System | DSA Project</title>
+    <meta name="description" content="Interactive visualization of Data Structures & Algorithms applied to real campus management scenarios. Explore Linked Lists, Hash Tables, Heaps, Graphs, BST and more.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span>DSA Campus</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#fundamentals" class="nav-link">DSA Fundamentals</a></li>
+                <li><a href="#student-management" class="nav-link">Student Management</a></li>
+                <li><a href="#search-system" class="nav-link">Search System</a></li>
+                <li><a href="#task-system" class="nav-link">Task & Complaint</a></li>
+                <li><a href="#scheduling" class="nav-link">Scheduling</a></li>
+                <li><a href="#navigation" class="nav-link">Campus Navigation</a></li>
+                <li><a href="#timeline" class="nav-link">Resource Timeline</a></li>
+                <li><a href="#code-explanation" class="nav-link">Code</a></li>
+            </ul>
+            <button class="nav-toggle" id="nav-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <span class="hero-badge">🎓 DSA EL Project</span>
+                <h1 class="hero-title">
+                    Smart Campus Resource<br>
+                    <span class="gradient-text">& Task Management System</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Discover how core Data Structures power real-world campus management systems. 
+                    From student records to navigation, see algorithms in action with interactive visualizations.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#fundamentals" class="btn btn-primary">Start Exploring</a>
+                    <a href="#code-explanation" class="btn btn-secondary">View Code</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-cards">
+                    <div class="float-card card-1">
+                        <span class="card-icon">🔗</span>
+                        <span>Linked List</span>
+                    </div>
+                    <div class="float-card card-2">
+                        <span class="card-icon">🌳</span>
+                        <span>BST</span>
+                    </div>
+                    <div class="float-card card-3">
+                        <span class="card-icon">#️⃣</span>
+                        <span>Hash Table</span>
+                    </div>
+                    <div class="float-card card-4">
+                        <span class="card-icon">📊</span>
+                        <span>Heap</span>
+                    </div>
+                    <div class="float-card card-5">
+                        <span class="card-icon">🗺️</span>
+                        <span>Graph</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll to explore</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- DSA Fundamentals Section -->
+    <section class="section section-light" id="fundamentals">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">📚 Foundation</span>
+                <h2 class="section-title">DSA Fundamentals</h2>
+                <p class="section-subtitle">Understanding the building blocks of efficient software systems</p>
+            </div>
+            <div class="fundamentals-grid">
+                <div class="fundamental-card">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">📦</span>
+                    </div>
+                    <h3>What is a Data Structure?</h3>
+                    <p>A data structure is a specialized format for organizing, processing, retrieving and storing data. It defines the relationship between data elements and the operations that can be performed on them.</p>
+                    <div class="card-example">
+                        <strong>Campus Example:</strong> Student records organized as a linked list for dynamic insertions and deletions.
+                    </div>
+                </div>
+                <div class="fundamental-card">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">⚡</span>
+                    </div>
+                    <h3>Why is DSA Required?</h3>
+                    <p>DSA provides efficient solutions to complex problems. Proper data structure selection can reduce time complexity from O(n²) to O(log n), making applications faster and more scalable.</p>
+                    <div class="card-example">
+                        <strong>Campus Example:</strong> Hash Table for O(1) student lookup vs O(n) array search.
+                    </div>
+                </div>
+                <div class="fundamental-card">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">📐</span>
+                    </div>
+                    <h3>Static vs Dynamic DS</h3>
+                    <p><strong>Static:</strong> Fixed size, allocated at compile time (Arrays).<br>
+                    <strong>Dynamic:</strong> Flexible size, allocated at runtime (Linked Lists, Trees).</p>
+                    <div class="card-example">
+                        <strong>Campus Example:</strong> Fixed course slots (Array) vs growing student list (Linked List).
+                    </div>
+                </div>
+                <div class="fundamental-card">
+                    <div class="card-icon-wrapper">
+                        <span class="card-icon">🎭</span>
+                    </div>
+                    <h3>Abstract vs Concrete DS</h3>
+                    <p><strong>Abstract (ADT):</strong> Defines behavior, not implementation (Stack, Queue).<br>
+                    <strong>Concrete:</strong> Actual implementation (Array-based Stack, Linked List Queue).</p>
+                    <div class="card-example">
+                        <strong>Campus Example:</strong> Priority Queue ADT implemented using Max Heap.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Management - Linked List -->
+    <section class="section section-dark" id="student-management">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🔗 Linked List</span>
+                <h2 class="section-title">Student & Faculty Management</h2>
+                <p class="section-subtitle">Dynamic record management with O(1) insertion and deletion</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Managing student records requires frequent additions and removals. Using arrays means shifting all elements for every operation - very inefficient!</p>
+                    <div class="problem-stats">
+                        <div class="stat">
+                            <span class="stat-value">O(n)</span>
+                            <span class="stat-label">Array Deletion</span>
+                        </div>
+                        <div class="stat highlight">
+                            <span class="stat-value">O(1)</span>
+                            <span class="stat-label">Linked List Deletion</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Visualization</h3>
+                    <div class="linked-list-container" id="linked-list-viz">
+                        <div class="ll-empty-state">Click "Add Student" to begin</div>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="text" id="student-name" placeholder="Student Name" maxlength="15">
+                            <input type="text" id="student-id" placeholder="ID (e.g., S001)" maxlength="6">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="addStudent()">Add Student</button>
+                            <button class="btn btn-small btn-secondary" onclick="deleteStudent()">Delete by ID</button>
+                            <button class="btn btn-small btn-outline" onclick="clearLinkedList()">Clear All</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="ll-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Linked List?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> Dynamic size - grows as needed</li>
+                        <li><span class="check">✓</span> O(1) insertion at head/tail</li>
+                        <li><span class="check">✓</span> O(1) deletion (once node found)</li>
+                        <li><span class="check">✓</span> No memory wastage</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>class Node {
+    constructor(data) {
+        this.data = data;
+        this.next = null;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Database - Array -->
+    <section class="section section-light" id="course-database">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">📚 Array</span>
+                <h2 class="section-title">Course & Lab Database</h2>
+                <p class="section-subtitle">Fixed-size structured data with O(1) index access</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Courses and labs have a fixed, known quantity each semester. We need fast index-based access and compact storage.</p>
+                    <div class="problem-stats">
+                        <div class="stat highlight">
+                            <span class="stat-value">O(1)</span>
+                            <span class="stat-label">Index Access</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">Fixed</span>
+                            <span class="stat-label">Memory Allocation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Course Database</h3>
+                    <div class="array-container">
+                        <table class="course-table" id="course-table">
+                            <thead>
+                                <tr>
+                                    <th>Index</th>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Credits</th>
+                                    <th>Room</th>
+                                </tr>
+                            </thead>
+                            <tbody id="course-tbody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="text" id="course-code" placeholder="Code (CS101)" maxlength="6">
+                            <input type="text" id="course-name" placeholder="Course Name" maxlength="20">
+                            <input type="number" id="course-credits" placeholder="Credits" min="1" max="6">
+                            <input type="text" id="course-room" placeholder="Room" maxlength="6">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="addCourse()">Add Course</button>
+                            <button class="btn btn-small btn-secondary" onclick="searchCourse()">Search by Code</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="array-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Array?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> O(1) random access by index</li>
+                        <li><span class="check">✓</span> Cache-friendly memory layout</li>
+                        <li><span class="check">✓</span> Perfect for fixed-size datasets</li>
+                        <li><span class="check">✓</span> Simple and efficient</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>// Struct-like object in array
+courses[i] = {
+    code: "CS101",
+    name: "Data Structures",
+    credits: 4,
+    room: "LH-01"
+};</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search System - Hash Table -->
+    <section class="section section-dark" id="search-system">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">#️⃣ Hash Table</span>
+                <h2 class="section-title">Fast Search System</h2>
+                <p class="section-subtitle">O(1) average-case lookup with collision handling</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>With thousands of students, searching by ID must be instant. Linear search through arrays takes O(n) time - too slow!</p>
+                    <div class="problem-stats">
+                        <div class="stat">
+                            <span class="stat-value">O(n)</span>
+                            <span class="stat-label">Array Search</span>
+                        </div>
+                        <div class="stat highlight">
+                            <span class="stat-value">O(1)</span>
+                            <span class="stat-label">Hash Table Search</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Hash Table Visualization</h3>
+                    <div class="hash-flow">
+                        <div class="hash-input-display">
+                            <span>Key:</span>
+                            <span id="hash-key-display">-</span>
+                        </div>
+                        <div class="hash-arrow">→ hash(key) →</div>
+                        <div class="hash-result-display">
+                            <span>Index:</span>
+                            <span id="hash-index-display">-</span>
+                        </div>
+                    </div>
+                    <div class="hash-table-container" id="hash-table-viz">
+                        <!-- Generated by JS -->
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="text" id="hash-key" placeholder="Student ID (S001)" maxlength="6">
+                            <input type="text" id="hash-value" placeholder="Student Name" maxlength="15">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="hashInsert()">Insert</button>
+                            <button class="btn btn-small btn-secondary" onclick="hashSearch()">Search</button>
+                            <button class="btn btn-small btn-outline" onclick="clearHashTable()">Clear</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="hash-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Hash Table?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> O(1) average search time</li>
+                        <li><span class="check">✓</span> Efficient key-value storage</li>
+                        <li><span class="check">✓</span> Chaining handles collisions</li>
+                        <li><span class="check">✓</span> Scales well with data</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>hash(key) {
+    let sum = 0;
+    for (let char of key) {
+        sum += char.charCodeAt(0);
+    }
+    return sum % this.size;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Task & Complaint System - Priority Queue / Heap -->
+    <section class="section section-light" id="task-system">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">📊 Max Heap</span>
+                <h2 class="section-title">Task & Complaint System</h2>
+                <p class="section-subtitle">Priority-based processing with emergency escalation</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Campus complaints have varying urgency. Emergency issues (fire, medical) must jump to the top. A simple queue can't handle priorities!</p>
+                    <div class="priority-legend">
+                        <span class="priority-tag p-high">🔴 Emergency (10)</span>
+                        <span class="priority-tag p-medium">🟡 High (7-9)</span>
+                        <span class="priority-tag p-low">🟢 Normal (1-6)</span>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Heap Tree Visualization</h3>
+                    <div class="heap-container" id="heap-viz">
+                        <div class="heap-empty-state">Add complaints to see the heap structure</div>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="text" id="complaint-text" placeholder="Complaint Description" maxlength="25">
+                            <input type="number" id="complaint-priority" placeholder="Priority (1-10)" min="1" max="10">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="addComplaint()">Add Complaint</button>
+                            <button class="btn btn-small btn-secondary" onclick="processComplaint()">Process Top</button>
+                            <button class="btn btn-small btn-outline" onclick="clearHeap()">Clear</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="heap-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Max Heap?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> O(1) access to highest priority</li>
+                        <li><span class="check">✓</span> O(log n) insert & extract</li>
+                        <li><span class="check">✓</span> Maintains heap property automatically</li>
+                        <li><span class="check">✓</span> Emergency tasks always on top</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>heapifyUp(index) {
+    let parent = Math.floor((index-1)/2);
+    while (index > 0 && 
+        this.heap[index].priority > 
+        this.heap[parent].priority) {
+        this.swap(index, parent);
+        index = parent;
+        parent = Math.floor((index-1)/2);
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Scheduling - Queue -->
+    <section class="section section-dark" id="scheduling">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">📋 Queue</span>
+                <h2 class="section-title">Event & Task Scheduling</h2>
+                <p class="section-subtitle">First-In-First-Out processing for fair scheduling</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Lab bookings and event requests must be processed in order of arrival. FIFO ensures fairness - first come, first served!</p>
+                    <div class="problem-stats">
+                        <div class="stat highlight">
+                            <span class="stat-value">O(1)</span>
+                            <span class="stat-label">Enqueue/Dequeue</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">FIFO</span>
+                            <span class="stat-label">Order Guarantee</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Queue Visualization</h3>
+                    <div class="queue-container">
+                        <div class="queue-pointer front-pointer">
+                            <span>FRONT</span>
+                            <span class="pointer-arrow">↓</span>
+                        </div>
+                        <div class="queue-slots" id="queue-viz">
+                            <div class="queue-empty-state">Queue is empty</div>
+                        </div>
+                        <div class="queue-pointer rear-pointer">
+                            <span>REAR</span>
+                            <span class="pointer-arrow">↓</span>
+                        </div>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="text" id="task-name" placeholder="Task/Event Name" maxlength="20">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="enqueueTask()">Enqueue</button>
+                            <button class="btn btn-small btn-secondary" onclick="dequeueTask()">Dequeue</button>
+                            <button class="btn btn-small btn-outline" onclick="clearQueue()">Clear</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="queue-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Queue?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> Maintains arrival order</li>
+                        <li><span class="check">✓</span> Fair first-come-first-serve</li>
+                        <li><span class="check">✓</span> O(1) operations</li>
+                        <li><span class="check">✓</span> Natural for scheduling</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>enqueue(item) {
+    this.items[this.rear] = item;
+    this.rear++;
+    this.size++;
+}
+
+dequeue() {
+    if (this.isEmpty()) return null;
+    const item = this.items[this.front];
+    this.front++;
+    this.size--;
+    return item;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Undo/Redo System - Stack -->
+    <section class="section section-light" id="undo-redo">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">📚 Stack</span>
+                <h2 class="section-title">Undo / Redo System</h2>
+                <p class="section-subtitle">Last-In-First-Out for action history management</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Users need to undo mistakes when editing forms or documents. The most recent action should be undone first - perfect for LIFO!</p>
+                    <div class="problem-stats">
+                        <div class="stat highlight">
+                            <span class="stat-value">O(1)</span>
+                            <span class="stat-label">Push/Pop</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">LIFO</span>
+                            <span class="stat-label">Order Guarantee</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Stack Visualization</h3>
+                    <div class="stack-layout">
+                        <div class="stack-container">
+                            <div class="stack-top-label">← TOP</div>
+                            <div class="stack-slots" id="stack-viz">
+                                <div class="stack-empty-state">Stack is empty</div>
+                            </div>
+                            <div class="stack-bottom-label">BOTTOM</div>
+                        </div>
+                        <div class="redo-stack-container">
+                            <h4>Redo Stack</h4>
+                            <div class="stack-slots redo-stack" id="redo-stack-viz">
+                                <div class="stack-empty-state">Empty</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="text" id="action-name" placeholder="Action (e.g., 'Edit Name')" maxlength="20">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="pushAction()">Do Action</button>
+                            <button class="btn btn-small btn-secondary" onclick="undoAction()">Undo</button>
+                            <button class="btn btn-small btn-accent" onclick="redoAction()">Redo</button>
+                            <button class="btn btn-small btn-outline" onclick="clearStacks()">Clear</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="stack-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Stack?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> LIFO matches undo behavior</li>
+                        <li><span class="check">✓</span> Most recent action on top</li>
+                        <li><span class="check">✓</span> Simple push/pop operations</li>
+                        <li><span class="check">✓</span> Dual stacks for redo</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>undo() {
+    if (this.undoStack.isEmpty()) 
+        return null;
+    const action = this.undoStack.pop();
+    this.redoStack.push(action);
+    return action;
+}
+
+redo() {
+    if (this.redoStack.isEmpty()) 
+        return null;
+    const action = this.redoStack.pop();
+    this.undoStack.push(action);
+    return action;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Navigation - Graph -->
+    <section class="section section-dark" id="navigation">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🗺️ Graph</span>
+                <h2 class="section-title">Campus Navigation</h2>
+                <p class="section-subtitle">BFS for shortest path, DFS for complete traversal</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Campus buildings are connected by paths. Finding the shortest route or exploring all locations requires graph algorithms!</p>
+                    <div class="algo-toggle">
+                        <button class="algo-btn active" id="bfs-btn" onclick="setAlgorithm('bfs')">BFS (Shortest)</button>
+                        <button class="algo-btn" id="dfs-btn" onclick="setAlgorithm('dfs')">DFS (Explore)</button>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 Graph Visualization</h3>
+                    <div class="graph-container">
+                        <svg id="graph-svg" viewBox="0 0 500 350">
+                            <!-- Edges drawn by JS -->
+                        </svg>
+                        <div class="graph-nodes" id="graph-nodes">
+                            <!-- Nodes drawn by JS -->
+                        </div>
+                    </div>
+                    <div class="path-display" id="path-display">
+                        Select start and end nodes to find path
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <select id="start-node">
+                                <option value="">Start Node</option>
+                            </select>
+                            <select id="end-node">
+                                <option value="">End Node</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="findPath()">Find Path</button>
+                            <button class="btn btn-small btn-outline" onclick="resetGraph()">Reset</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="graph-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why Graph?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> Models real-world connections</li>
+                        <li><span class="check">✓</span> BFS finds shortest path</li>
+                        <li><span class="check">✓</span> DFS explores all reachable nodes</li>
+                        <li><span class="check">✓</span> Flexible structure</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>bfs(start, end) {
+    const queue = [start];
+    const visited = new Set();
+    const parent = {};
+    
+    while (queue.length > 0) {
+        const node = queue.shift();
+        if (node === end) 
+            return this.buildPath(parent, end);
+        for (const neighbor of this.adj[node]) {
+            if (!visited.has(neighbor)) {
+                visited.add(neighbor);
+                parent[neighbor] = node;
+                queue.push(neighbor);
+            }
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resource Timeline - BST -->
+    <section class="section section-light" id="timeline">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">🌳 BST</span>
+                <h2 class="section-title">Resource Availability Timeline</h2>
+                <p class="section-subtitle">Binary Search Tree for sorted booking management</p>
+            </div>
+            <div class="ds-layout">
+                <div class="ds-problem">
+                    <h3>🎯 The Problem</h3>
+                    <p>Lab and room bookings must be sorted by time. BST maintains sorted order efficiently and detects booking conflicts instantly!</p>
+                    <div class="problem-stats">
+                        <div class="stat highlight">
+                            <span class="stat-value">O(log n)</span>
+                            <span class="stat-label">Insert/Search</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">In-order</span>
+                            <span class="stat-label">Sorted Timeline</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ds-visualization">
+                    <h3>📊 BST Visualization</h3>
+                    <div class="bst-container" id="bst-viz">
+                        <div class="bst-empty-state">Add bookings to see the BST structure</div>
+                    </div>
+                    <div class="timeline-display">
+                        <h4>📅 In-Order Timeline</h4>
+                        <div class="timeline-slots" id="timeline-viz">
+                            <span class="timeline-empty">No bookings yet</span>
+                        </div>
+                    </div>
+                    <div class="viz-controls">
+                        <div class="input-group">
+                            <input type="number" id="booking-time" placeholder="Time (9-18)" min="9" max="18">
+                            <input type="text" id="booking-resource" placeholder="Resource (Lab-1)" maxlength="10">
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-small btn-primary" onclick="addBooking()">Add Booking</button>
+                            <button class="btn btn-small btn-secondary" onclick="searchBooking()">Check Slot</button>
+                            <button class="btn btn-small btn-outline" onclick="clearBST()">Clear</button>
+                        </div>
+                    </div>
+                    <div class="operation-log" id="bst-log"></div>
+                </div>
+                <div class="ds-explanation">
+                    <h3>💡 Why BST?</h3>
+                    <ul class="advantage-list">
+                        <li><span class="check">✓</span> Maintains sorted order</li>
+                        <li><span class="check">✓</span> O(log n) operations</li>
+                        <li><span class="check">✓</span> In-order gives timeline</li>
+                        <li><span class="check">✓</span> Easy conflict detection</li>
+                    </ul>
+                    <div class="code-preview">
+                        <pre><code>insert(time, resource) {
+    const newNode = new TreeNode(time, resource);
+    if (!this.root) {
+        this.root = newNode;
+        return true;
+    }
+    return this._insertNode(this.root, newNode);
+}
+
+inorder(node, result = []) {
+    if (node) {
+        this.inorder(node.left, result);
+        result.push(node);
+        this.inorder(node.right, result);
+    }
+    return result;
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code & Explanation Section -->
+    <section class="section section-dark" id="code-explanation">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">💻 Implementation</span>
+                <h2 class="section-title">Code & Explanation</h2>
+                <p class="section-subtitle">Complete manual implementations with detailed explanations</p>
+            </div>
+            <div class="code-tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" onclick="showCodeTab('linkedlist')">Linked List</button>
+                    <button class="tab-btn" onclick="showCodeTab('hashtable')">Hash Table</button>
+                    <button class="tab-btn" onclick="showCodeTab('heap')">Max Heap</button>
+                    <button class="tab-btn" onclick="showCodeTab('queue')">Queue</button>
+                    <button class="tab-btn" onclick="showCodeTab('stack')">Stack</button>
+                    <button class="tab-btn" onclick="showCodeTab('graph')">Graph</button>
+                    <button class="tab-btn" onclick="showCodeTab('bst')">BST</button>
+                </div>
+                <div class="tab-content" id="code-tab-content">
+                    <!-- Content populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <span class="logo-icon">⚡</span>
+                    <span>Smart Campus DSA</span>
+                </div>
+                <p class="footer-text">
+                    Data Structures & Algorithms - EL Project<br>
+                    Demonstrating real-world applications of DSA in campus management
+                </p>
+                <div class="tech-badges">
+                    <span class="tech-badge">HTML5</span>
+                    <span class="tech-badge">CSS3</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">DSA</span>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 DSA Campus Project. Built with 💜 for learning.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
