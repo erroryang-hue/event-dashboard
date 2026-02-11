@@ -148,75 +148,75 @@ const EventList = () => {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {events.map((event) => (
-                    <div key={event.id} className="glass-card overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
-                        <div className="h-1.5" style={{ background: 'var(--gradient-primary)' }}></div>
-                        <div className="p-6">
-                            <div className="flex justify-between items-start mb-4">
-                                <h3 className="text-lg font-bold text-slate-100 line-clamp-1 group-hover:text-indigo-400 transition-colors uppercase tracking-tight">{event.name}</h3>
-                                <div className="flex space-x-2">
-                                    <button
-                                        onClick={() => handleEdit(event)}
-                                        className="text-slate-500 hover:text-indigo-400 p-1.5 bg-white/5 rounded-lg transition-colors"
-                                    >
-                                        <FaPencilAlt size={12} />
+                {events && events.length > 0 ? (
+                    events.map((event) => (
+                        <div key={event?.id} className="glass-card overflow-hidden group hover:scale-[1.02] transition-transform duration-300">
+                            <div className="h-1.5" style={{ background: 'var(--gradient-primary)' }}></div>
+                            <div className="p-6">
+                                <div className="flex justify-between items-start mb-4">
+                                    <h3 className="text-lg font-bold text-slate-100 line-clamp-1 group-hover:text-indigo-400 transition-colors uppercase tracking-tight">{event.name}</h3>
+                                    <div className="flex space-x-2">
+                                        <button
+                                            onClick={() => handleEdit(event)}
+                                            className="text-slate-500 hover:text-indigo-400 p-1.5 bg-white/5 rounded-lg transition-colors"
+                                        >
+                                            <FaPencilAlt size={12} />
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(event.id)}
+                                            className="text-slate-500 hover:text-red-400 p-1.5 bg-white/5 rounded-lg transition-colors"
+                                        >
+                                            <FaTrash size={12} />
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <p className="text-slate-400 text-sm mb-6 line-clamp-2 h-10 leading-relaxed font-light">
+                                    {event.description || 'No description provided. Define the objective and constraints for this event node.'}
+                                </p>
+
+                                <div className="space-y-3 mb-6">
+                                    <div className="flex items-center text-xs">
+                                        <FaCalendarAlt className="mr-3 text-indigo-400" />
+                                        <span className="text-slate-300 font-medium">Timeline:</span>
+                                        <span className="ml-2 text-slate-400">{new Date(event.start_date).toLocaleDateString()}</span>
+                                    </div>
+                                    <div className="flex items-center text-xs">
+                                        <FaMapMarkerAlt className="mr-3 text-emerald-400" />
+                                        <span className="text-slate-300 font-medium">Location:</span>
+                                        <span className="ml-2 text-slate-400 line-clamp-1">{event.location || 'Distributed / Cloud'}</span>
+                                    </div>
+                                    <div className="flex items-center text-xs">
+                                        <FaUsers className="mr-3 text-amber-400" />
+                                        <span className="text-slate-300 font-medium">Capacity:</span>
+                                        <span className="ml-2 text-slate-400">{event.capacity} Entities</span>
+                                    </div>
+                                </div>
+
+                                <div className="pt-5 border-t border-white/5 flex justify-between items-center">
+                                    <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] ${event.status === 'published' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                                        event.status === 'draft' ? 'bg-slate-500/10 text-slate-400 border border-slate-500/20' :
+                                            'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                                        }`}>
+                                        {event.status}
+                                    </span>
+                                    <button className="flex items-center text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
+                                        <FaCode className="mr-2 opacity-50" /> VIEW LOGIC
                                     </button>
-                                    <button
-                                        onClick={() => handleDelete(event.id)}
-                                        className="text-slate-500 hover:text-red-400 p-1.5 bg-white/5 rounded-lg transition-colors"
-                                    >
-                                        <FaTrash size={12} />
-                                    </button>
                                 </div>
-                            </div>
-
-                            <p className="text-slate-400 text-sm mb-6 line-clamp-2 h-10 leading-relaxed font-light">
-                                {event.description || 'No description provided. Define the objective and constraints for this event node.'}
-                            </p>
-
-                            <div className="space-y-3 mb-6">
-                                <div className="flex items-center text-xs">
-                                    <FaCalendarAlt className="mr-3 text-indigo-400" />
-                                    <span className="text-slate-300 font-medium">Timeline:</span>
-                                    <span className="ml-2 text-slate-400">{new Date(event.start_date).toLocaleDateString()}</span>
-                                </div>
-                                <div className="flex items-center text-xs">
-                                    <FaMapMarkerAlt className="mr-3 text-emerald-400" />
-                                    <span className="text-slate-300 font-medium">Location:</span>
-                                    <span className="ml-2 text-slate-400 line-clamp-1">{event.location || 'Distributed / Cloud'}</span>
-                                </div>
-                                <div className="flex items-center text-xs">
-                                    <FaUsers className="mr-3 text-amber-400" />
-                                    <span className="text-slate-300 font-medium">Capacity:</span>
-                                    <span className="ml-2 text-slate-400">{event.capacity} Entities</span>
-                                </div>
-                            </div>
-
-                            <div className="pt-5 border-t border-white/5 flex justify-between items-center">
-                                <span className={`px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-[0.1em] ${event.status === 'published' ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
-                                    event.status === 'draft' ? 'bg-slate-500/10 text-slate-400 border border-slate-500/20' :
-                                        'bg-amber-500/10 text-amber-400 border border-amber-500/20'
-                                    }`}>
-                                    {event.status}
-                                </span>
-                                <button className="flex items-center text-xs font-bold text-indigo-400 hover:text-indigo-300 transition-colors">
-                                    <FaCode className="mr-2 opacity-50" /> VIEW LOGIC
-                                </button>
                             </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="glass-card p-16 text-center border-2 border-dashed border-white/5 bg-transparent col-span-full">
+                        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <FaPlus className="text-slate-600 text-xl" />
+                        </div>
+                        <p className="text-slate-500 font-medium">No event nodes detected in the current tree structure.</p>
+                        <button onClick={handleAdd} className="mt-4 text-indigo-400 text-sm font-bold hover:underline">Insert Root Node</button>
                     </div>
-                ))}
+                )}
             </div>
-
-            {events.length === 0 && (
-                <div className="glass-card p-16 text-center border-2 border-dashed border-white/5 bg-transparent">
-                    <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <FaPlus className="text-slate-600 text-xl" />
-                    </div>
-                    <p className="text-slate-500 font-medium">No event nodes detected in the current tree structure.</p>
-                    <button onClick={handleAdd} className="mt-4 text-indigo-400 text-sm font-bold hover:underline">Insert Root Node</button>
-                </div>
-            )}
 
 
 

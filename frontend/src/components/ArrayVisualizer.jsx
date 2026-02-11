@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaCalendarAlt, FaMapMarkerAlt, FaPlus, FaArrowRight, FaArrowLeft, FaSortAmountDown, FaTicketAlt, FaEye, FaSync, FaClock } from 'react-icons/fa';
 
-const ArrayVisualizer = ({ events, onAddEvent, onBookEvent, onSortEvents, onReSyncEvents, conflictTree }) => {
+const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, onReSyncEvents, conflictTree }) => {
     const [page, setPage] = useState(1);
     const pageSize = 3;
 
@@ -190,44 +190,45 @@ const ArrayVisualizer = ({ events, onAddEvent, onBookEvent, onSortEvents, onReSy
 
             {/* List */}
             <div className="flex-1 space-y-3 mb-6 min-h-[300px]">
-                {paginatedEvents.map((event, index) => {
-                    const intensity = (event.views || 0) / maxViews;
-                    const hue = 200 - (intensity * 200);
-                    const borderColor = `hsl(${hue}, 70%, 50%)`;
+                {events && events.length > 0 ? (
+                    paginatedEvents.map((event, index) => {
+                        const intensity = (event.views || 0) / maxViews;
+                        const hue = 200 - (intensity * 200);
+                        const borderColor = `hsl(${hue}, 70%, 50%)`;
 
-                    return (
-                        <div
-                            key={event.id}
-                            className="array-cell p-4 rounded-lg flex justify-between items-center group hover:scale-[1.01] transition-transform relative overflow-hidden border"
-                            style={{ borderColor: borderColor, boxShadow: `0 0 ${intensity * 10}px ${borderColor}40` }}
-                        >
+                        return (
+                            <div
+                                key={event?.id || index}
+                                className="array-cell p-4 rounded-lg flex justify-between items-center group hover:scale-[1.01] transition-transform relative overflow-hidden border"
+                                style={{ borderColor: borderColor, boxShadow: `0 0 ${intensity * 10}px ${borderColor}40` }}
+                            >
 
-                            <div className="flex-1">
-                                <div className="font-bold text-white mb-1 group-hover:text-blue-400 transition-colors flex justify-between">
-                                    <span>{event.title}</span>
-                                    <div className="flex flex-col items-end">
-                                        <span className="text-blue-400 font-mono">${event.price}</span>
-                                        <span className="text-[10px] text-slate-500">{event.location}</span>
+                                <div className="flex-1">
+                                    <div className="font-bold text-white mb-1 group-hover:text-blue-400 transition-colors flex justify-between">
+                                        <span>{event.title}</span>
+                                        <div className="flex flex-col items-end">
+                                            <span className="text-blue-400 font-mono">${event.price}</span>
+                                            <span className="text-[10px] text-slate-500">{event.location}</span>
+                                        </div>
                                     </div>
+                                    <div className="flex gap-4 text-xs text-slate-400 mb-2">
+                                        <span className="flex items-center gap-1"><FaCalendarAlt /> {event.date}</span>
+                                        {event.time && <span className="flex items-center gap-1"><FaClock /> {event.time}</span>}
+                                        <span className="flex items-center gap-1"><FaEye /> {event.views?.toLocaleString()}</span>
+                                    </div>
+                                    <button
+                                        onClick={() => onBookEvent(event)}
+                                        className="text-[10px] bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-1 rounded flex items-center gap-1 transition-colors"
+                                    >
+                                        <FaTicketAlt /> Book Ticket
+                                    </button>
                                 </div>
-                                <div className="flex gap-4 text-xs text-slate-400 mb-2">
-                                    <span className="flex items-center gap-1"><FaCalendarAlt /> {event.date}</span>
-                                    {event.time && <span className="flex items-center gap-1"><FaClock /> {event.time}</span>}
-                                    <span className="flex items-center gap-1"><FaEye /> {event.views?.toLocaleString()}</span>
-                                </div>
-                                <button
-                                    onClick={() => onBookEvent(event)}
-                                    className="text-[10px] bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-1 rounded flex items-center gap-1 transition-colors"
-                                >
-                                    <FaTicketAlt /> Book Ticket
-                                </button>
-                            </div>
 
-                            <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        </div>
-                    );
-                })}
-                {events.length === 0 && (
+                                <div className="absolute right-0 top-0 bottom-0 w-1 bg-gradient-to-b from-transparent via-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
+                        );
+                    })
+                ) : (
                     <div className="text-center text-slate-500 py-10">No events. Add one!</div>
                 )}
             </div>

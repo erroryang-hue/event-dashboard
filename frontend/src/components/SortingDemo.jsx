@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SortingGenerators } from '../utils/dsa';
 import { FaPlay, FaStepForward, FaPause, FaRedo, FaFastForward } from 'react-icons/fa';
 
-const SortingDemo = ({ events }) => {
+const SortingDemo = ({ events = [] }) => {
     const [array, setArray] = useState([]);
     const [sorting, setSorting] = useState(false);
     const [sorted, setSorted] = useState(false);
@@ -40,7 +40,8 @@ const SortingDemo = ({ events }) => {
         genRef.current = null;
 
         // Map events to visual data
-        const visualData = events.map(e => ({
+        const safeEvents = Array.isArray(events) ? events : [];
+        const visualData = safeEvents.map(e => ({
             id: e.id,
             value: e.price || 0,
             label: e.title
