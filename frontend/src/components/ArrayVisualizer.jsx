@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FaCalendarAlt, FaMapMarkerAlt, FaPlus, FaArrowRight, FaArrowLeft, FaSortAmountDown, FaTicketAlt, FaEye, FaSync, FaClock } from 'react-icons/fa';
 
-const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, onReSyncEvents, conflictTree }) => {
+const ArrayVisualizer = ({ events = [], bookings = [], onAddEvent, onBookEvent, onSortEvents, onReSyncEvents, conflictTree }) => {
     const [page, setPage] = useState(1);
     const pageSize = 3;
 
@@ -16,7 +16,7 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
         startTime: '09:00',
         endTime: '11:00',
         price: '',
-        views: ''
+        capacity: ''
     });
 
     // Reset page if out of bounds (e.g. after filtering/sorting)
@@ -24,8 +24,8 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
         if (page > totalPages && totalPages > 0) setPage(totalPages);
     }, [events.length, totalPages]);
 
-    // Heat Map Logic: Find max views to normalize color intensity
-    const maxViews = Math.max(...events.map(e => e.views || 0), 1);
+    // Heat Map Logic: Find max capacity to normalize color intensity (or just use constant? using capacity)
+    const maxCapacity = Math.max(...events.map(e => e.capacity || 0), 1);
 
     const [error, setError] = useState('');
 
@@ -80,11 +80,11 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
             startTime: newEvent.startTime,
             endTime: newEvent.endTime,
             price: parseInt(newEvent.price) || 0,
-            views: parseInt(newEvent.views) || 0
+            capacity: parseInt(newEvent.capacity) || 0
         });
 
         // Reset
-        setNewEvent({ ...newEvent, title: '', price: '', views: '' });
+        setNewEvent({ ...newEvent, title: '', price: '', capacity: '' });
         setError('');
     };
 
@@ -110,9 +110,9 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
                     <button
                         onClick={() => onSortEvents('merge')}
                         className="flex items-center gap-2 px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold transition-colors border border-slate-700"
-                        title="Sort by Price (Merge Sort)"
+                        title="Sort by Registrations (Descending)"
                     >
-                        <FaSortAmountDown /> Sort (Merge)
+                        <FaSortAmountDown /> Sort by Registrations
                     </button>
                 </div>
             </div>
@@ -169,9 +169,9 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
                 <input
                     type="number"
                     className="bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-white focus:outline-none focus:border-blue-500"
-                    placeholder="Views"
-                    value={newEvent.views}
-                    onChange={e => setNewEvent({ ...newEvent, views: e.target.value })}
+                    placeholder="Capacity"
+                    value={newEvent.capacity}
+                    onChange={e => setNewEvent({ ...newEvent, capacity: e.target.value })}
                 />
                 <button
                     type="submit"
@@ -192,9 +192,17 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
             <div className="flex-1 space-y-3 mb-6 min-h-[300px]">
                 {events && events.length > 0 ? (
                     paginatedEvents.map((event, index) => {
-                        const intensity = (event.views || 0) / maxViews;
-                        const hue = 200 - (intensity * 200);
+                        // Calculate Stats
+                        const registeredCount = bookings.filter(b => b.eventId === event.id).length;
+
+                        // Use registered count for intensity? Or capacity utilization?
+                        // Let's use capacity utilization for heat map intensity
+                        const utilization = (registeredCount / (event.capacity || 1));
+                        const intensity = Math.min(utilization, 1);
+                        const hue = 200 - (intensity * 200); // Blue to Red
                         const borderColor = `hsl(${hue}, 70%, 50%)`;
+
+                        const totalRevenue = registeredCount * (event.price || 0);
 
                         return (
                             <div
@@ -214,8 +222,15 @@ const ArrayVisualizer = ({ events = [], onAddEvent, onBookEvent, onSortEvents, o
                                     <div className="flex gap-4 text-xs text-slate-400 mb-2">
                                         <span className="flex items-center gap-1"><FaCalendarAlt /> {event.date}</span>
                                         {event.time && <span className="flex items-center gap-1"><FaClock /> {event.time}</span>}
-                                        <span className="flex items-center gap-1"><FaEye /> {event.views?.toLocaleString()}</span>
+                                        <span className="flex items-center gap-1" title="Max Capacity"><FaEye /> Cap: {event.capacity?.toLocaleString()}</span>
                                     </div>
+
+                                    {/* Stats Display */}
+                                    <div className="flex gap-4 text-xs font-mono text-emerald-400 mb-2 bg-slate-950/30 p-1.5 rounded border border-slate-800">
+                                        <span>Registered: {registeredCount}</span>
+                                        <span>Revenue: ₹{totalRevenue}</span>
+                                    </div>
+
                                     <button
                                         onClick={() => onBookEvent(event)}
                                         className="text-[10px] bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 border border-blue-500/30 px-2 py-1 rounded flex items-center gap-1 transition-colors"

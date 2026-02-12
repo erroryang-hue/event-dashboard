@@ -80,7 +80,12 @@ export class MaxHeap {
         let index = this.heap.length - 1;
         while (index > 0) {
             let parentIndex = this.getParentIndex(index);
-            if (this.heap[parentIndex].views < this.heap[index].views) {
+            // Changed from views to registrations (or capacity if preferred, but trending usually means popular)
+            // User didn't explicitly request Heap change, but "Trending" implies activity.
+            // Let's safe guard: If registrations exists, use it. Else use 0.
+            const val = (node) => node.registrations || 0;
+
+            if (val(this.heap[parentIndex]) < val(this.heap[index])) {
                 [this.heap[parentIndex], this.heap[index]] = [this.heap[index], this.heap[parentIndex]];
                 index = parentIndex;
             } else {
@@ -101,16 +106,18 @@ export class MaxHeap {
 
     heapifyDown() {
         let index = 0;
+        const val = (node) => node.registrations || 0;
+
         while (this.getLeftChildIndex(index) < this.heap.length) {
             let largerChildIndex = this.getLeftChildIndex(index);
             let rightChildIndex = this.getRightChildIndex(index);
 
             if (rightChildIndex < this.heap.length &&
-                this.heap[rightChildIndex].views > this.heap[largerChildIndex].views) {
+                val(this.heap[rightChildIndex]) > val(this.heap[largerChildIndex])) {
                 largerChildIndex = rightChildIndex;
             }
 
-            if (this.heap[index].views < this.heap[largerChildIndex].views) {
+            if (val(this.heap[index]) < val(this.heap[largerChildIndex])) {
                 [this.heap[index], this.heap[largerChildIndex]] = [this.heap[largerChildIndex], this.heap[index]];
                 index = largerChildIndex;
             } else {
@@ -124,7 +131,8 @@ export class MaxHeap {
     }
 }
 
-// 4. Hash Table Implementation (Chaining)
+// ... existing Hash Table code ...
+
 // 4. Hash Table Implementation (Double Hashing + Open Addressing)
 export class HashTable {
     constructor(size = 31) {
@@ -155,26 +163,6 @@ export class HashTable {
         const intKey = this._stringToInt(key);
         const h1 = this._hash1(intKey);
         const h2 = this._hash2(intKey);
-
-        // We will ignore case for the KEY itself when finding the bucket, 
-        // but we will store multiple items in that bucket.
-        // Actually, Double Hashing + Chaining is a bit hybrid.
-        // Standard Chaining: buffer = table[h1(key)].
-        // Double Hashing + Chaining: Probe to find a "slot" for this key... wait.
-        // If we use Chaining, we usually don't need Double Hashing for *collision resolution of the buckets* unless the buckets themselves are the slots.
-        // User asked for "Linked List Chaining".
-        // Let's stick to the existing Double Hashing probe to find a bucket for a "Key Group" (e.g. all "Event A" go to same bucket),
-        // OR just simple Open Addressing?
-        // User example: "Index 17: [hi] -> [hi]".
-        // This implies deviations are handled by the list at Index 17.
-        // So, let's keep the Double Hashing logic to FIND the bucket for the key (handling key collisions),
-        // and IN that bucket, we store a list (array) of values.
-
-        // Simpler approach for "Educational Showcase" of Chaining: 
-        // Just use h1. But the existing code used Double Hashing.
-        // Let's keep Double Hashing to find the *Index for this Key*.
-        // If index is occupied by a DIFFERENT key, we probe.
-        // If index is occupied by SALE key, we append.
 
         const lowerKey = key.toString().toLowerCase();
 
@@ -253,8 +241,6 @@ export class HashTable {
 }
 
 // 5. Binary Search Tree Implementation
-// ... (No changes here, we visualizer handles logic) ...
-// ACTUALLY, BST insert logic should strictly follow Date AND Time.
 class TreeNode {
     constructor(value) {
         this.value = value;
@@ -453,11 +439,15 @@ export const SortingGenerators = {
 
         let i = 0, j = 0, k = left;
 
+        // Use helper to safely get registrations, default to 0
+        const val = (item) => item.registrations || 0;
+
         while (i < leftArr.length && j < rightArr.length) {
             // Visualize Compare
             yield { type: 'compare', indices: [left + i, mid + 1 + j], array: [...array] };
 
-            if (leftArr[i].price <= rightArr[j].price) {
+            // SORT DESCENDING by Registrations
+            if (val(leftArr[i]) >= val(rightArr[j])) {
                 array[k] = leftArr[i];
                 i++;
             } else {
@@ -485,11 +475,15 @@ export const SortingGenerators = {
 
 export const SortingAlgorithms = {
     // Classic implementations for instant sort
+    // SORT DESCENDING by Registrations
     partition(arr, low, high) {
         let pivot = arr[high];
         let i = low - 1;
+        const val = (item) => item.registrations || 0;
+
         for (let j = low; j < high; j++) {
-            if (arr[j].price < pivot.price) {
+            // Descending logic: if current >= pivot, move it to left
+            if (val(arr[j]) >= val(pivot)) {
                 i++;
                 [arr[i], arr[j]] = [arr[j], arr[i]];
             }
@@ -518,8 +512,11 @@ export const SortingAlgorithms = {
 
     merge(left, right) {
         let result = [], i = 0, j = 0;
+        const val = (item) => item.registrations || 0;
+
         while (i < left.length && j < right.length) {
-            if (left[i].price < right[j].price) result.push(left[i++]);
+            // Descending logic
+            if (val(left[i]) >= val(right[j])) result.push(left[i++]);
             else result.push(right[j++]);
         }
         return result.concat(left.slice(i)).concat(right.slice(j));
